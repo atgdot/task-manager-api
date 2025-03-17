@@ -20,4 +20,4 @@ app.use(morgan("dev"));
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/tasks", require("./routes/taskRoutes"));
 
-module.exports = app; // ✅ Export app (without starting the server)
+module.exports = app; 

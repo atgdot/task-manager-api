@@ -1,7 +1,7 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const app = require("../src/app"); // ✅ Import app without running the server
+const app = require("../src/app");
 const Task = require("../src/models/Task");
 const User = require("../src/models/User");
 const redisClient = require("../src/config/redis");
@@ -11,17 +11,14 @@ let mongoServer;
 let authToken;
 
 beforeAll(async () => {
-  // ✅ Stop existing MongoDB connection
   if (mongoose.connection.readyState !== 0) {
     await mongoose.disconnect();
   }
 
-  // ✅ Start in-memory MongoDB for testing
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
   await mongoose.connect(mongoUri);
 
-  // ✅ Create a test user and get JWT token
   const userResponse = await request(app).post("/api/auth/register").send({
     name: "Test User",
     email: "test@example.com",
@@ -32,14 +29,11 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  // ✅ Close the database connection
   await mongoose.connection.close();
   await mongoServer.stop();
 
-  // ✅ Disconnect Redis to prevent Jest from hanging
   await redisClient.quit();
 
-  // ✅ Stop all cron jobs to prevent open handles
   cron.getTasks().forEach((task) => task.stop());
 });
 

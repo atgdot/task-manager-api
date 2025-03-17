@@ -2,7 +2,7 @@ const Task = require("../models/Task");
 const redisClient = require("../config/redis");
 const PriorityQueue = require("../utils/priorityQueue");
 
-// ✅ Create Task
+// Create Task
 exports.createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate, reminder, category } = req.body;
@@ -29,7 +29,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// ✅ Get All Tasks (with Pagination, Filters & Caching)
+// Get All Tasks 
 exports.getTasks = async (req, res) => {
   try {
     const { priority, status, category, page = 1, limit = 10 } = req.query;
@@ -67,7 +67,6 @@ exports.updateTask = async (req, res) => {
 
     if (task.user.toString() !== req.user.id) return res.status(403).json({ message: "Unauthorized" });
 
-    // Update fields dynamically
     Object.keys(req.body).forEach((key) => (task[key] = req.body[key]));
 
     // Log activity
@@ -82,7 +81,7 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// ✅ Delete Task
+// Delete Task
 exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -99,7 +98,7 @@ exports.deleteTask = async (req, res) => {
   }
 };
 
-// ✅ Add Comment to Task
+// Add Comment to Task
 exports.addComment = async (req, res) => {
   try {
     const { text } = req.body;
@@ -120,7 +119,7 @@ exports.addComment = async (req, res) => {
   }
 };
 
-// ✅ Get Task Activity Log
+// Get Task Activity Log
 exports.getActivityLog = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
