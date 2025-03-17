@@ -4,17 +4,17 @@ const {
   getTasks,
   updateTask,
   deleteTask,
-  getSortedTasks, // ✅ Import getSortedTasks here
+  addComment, // 
 } = require("../controllers/taskController");
 const { protect } = require("../middleware/authMiddleware");
 
-const router = express.Router(); // ✅ Define router before using it
+const router = express.Router(); 
 
 // Task Routes
 router.post("/", protect, createTask);
 router.get("/", protect, getTasks);
 router.put("/:id", protect, updateTask);
 router.delete("/:id", protect, deleteTask);
-router.get("/sorted", protect, getSortedTasks); // ✅ Now placed after router initialization
+router.post("/:id/comment", protect, addComment); 
 
 module.exports = router;

@@ -4,17 +4,16 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 require("dotenv").config();
+require("./config/cron"); 
 
 const app = express();
-connectDB(); // Connect MongoDB
+connectDB(); 
 
-// Middleware
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
 
-// Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/tasks", require("./routes/taskRoutes"));
 

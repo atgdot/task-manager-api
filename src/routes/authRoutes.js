@@ -8,4 +8,4 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/profile", protect, getUserProfile);
 
-module.exports = router; // ✅ Make sure you're exporting the router
+module.exports = router; 
