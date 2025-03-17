@@ -10,7 +10,6 @@ const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router(); 
 
-// Task Routes
 router.post("/", protect, createTask);
 router.get("/", protect, getTasks);
 router.put("/:id", protect, updateTask);
